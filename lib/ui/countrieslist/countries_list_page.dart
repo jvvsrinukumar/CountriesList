@@ -26,7 +26,7 @@ class _CountriesListPageState extends State<CountriesListPage> {
   void initState() {
     cubit = BlocProvider.of<CountriesCubit>(context);
     cubit.fetchCountries();
-    
+
     super.initState();
   }
 
@@ -36,7 +36,7 @@ class _CountriesListPageState extends State<CountriesListPage> {
       appBar: AppBar(
           elevation: 0,
           automaticallyImplyLeading: false,
-          title: const Text(""),
+          title: const Text("List"),
           actions: [
             BlocBuilder<CountriesCubit, CountriesState>(
               builder: (context, state) {
@@ -80,7 +80,7 @@ class _CountriesListPageState extends State<CountriesListPage> {
                           hintText: "",
                           suffixIcon: const Icon(Icons.search),
                           onChanged: (search) {
-                            cubit.searchCountries(search);
+                            cubit.searchCountries(search,cubit.data);
                           },
                         );
                       }),
@@ -110,12 +110,7 @@ class _CountriesListPageState extends State<CountriesListPage> {
                                                 "countryDetails":
                                                     snapshot.data![index],
                                                 "onFavoriteAdded": () {
-                                                  if (UserDefaults.getString(
-                                                          Constants
-                                                              .kFavoriteCountry)
-                                                      .isNotEmpty) {
-                                                    cubit.getFavorite();
-                                                  }
+                                                  cubit.getFavorite();
                                                 }
                                               });
                                         },
@@ -166,7 +161,14 @@ class _CountriesListPageState extends State<CountriesListPage> {
                   return Container();
                 }
               },
-              listener: (context, state) {},
+              listener: (context, state) {
+                if (state is CountriesLoaded) {
+                  if (UserDefaults.getString(Constants.kFavoriteCountry)
+                      .isNotEmpty) {
+                    cubit.getFavorite();
+                  }
+                }
+              },
             ),
           ],
         ),

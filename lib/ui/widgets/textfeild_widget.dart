@@ -38,8 +38,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   void initState() {
     super.initState();
-    
-   // print(widget.text);
     controller = TextEditingController(text: widget.text);
     hint = widget.hintText;
   }
