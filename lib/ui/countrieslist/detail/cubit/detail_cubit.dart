@@ -10,17 +10,15 @@ part 'detail_state.dart';
 
 class DetailCubit extends Cubit<DetailState> {
   DetailCubit() : super(DetailInitial());
-final isFormValid = BehaviorSubject<bool>.seeded(false);
-  void setFavorite(bool isFavorite, String country)  {
+  final isFormValid = BehaviorSubject<bool>.seeded(false);
+  setFavorite(bool isFavorite, String country) {
     if (isFavorite) {
-      UserDefaults.setString(
-          Constants.kFavoriteCountry, country);
-          isFormValid.sink.add(true);
+      UserDefaults.setString(Constants.kFavoriteCountry, country);
+      isFormValid.sink.add(true);
+      return true;
     } else {
-      UserDefaults.setString(
-          Constants.kFavoriteCountry, "");
-          isFormValid.sink.add(false);
+      UserDefaults.setString(Constants.kFavoriteCountry, "");
+      isFormValid.sink.add(false);
     }
-    
   }
 }

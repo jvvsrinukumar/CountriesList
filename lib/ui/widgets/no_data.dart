@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:countrylist/resources/assests_manager.dart';
 import 'package:countrylist/resources/color_manager.dart';
 import 'package:countrylist/resources/font_manager.dart';

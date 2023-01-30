@@ -15,7 +15,7 @@ ThemeData getApplicationTheme() {
         .grey1, // will be used incase of disabled button for example
    
     //splashColor: ColorManager.primaryOpacity70,
-    backgroundColor: ColorManager.backGround,
+    //backgroundColor: ColorManager.backGround,
     // card view theme
     cardTheme: CardTheme(
       color: ColorManager.white,
@@ -57,26 +57,6 @@ ThemeData getApplicationTheme() {
     ),
 
      // Text theme
-    textTheme: TextTheme(
-      headline1:
-          getBoldStyle(color: ColorManager.textColor, fontSize: FontSizes.s20),
-      headline2: getSemiBoldStyle(
-          color: ColorManager.textColor, fontSize: FontSizes.s15),
-      headline3:
-          getLightStyle(color: ColorManager.textColor, fontSize: FontSizes.s20),
-      headline4:
-          getLightStyle(color: ColorManager.textColor, fontSize: FontSizes.s16),
-      headline5:
-          getBoldStyle(color: ColorManager.textColor, fontSize: FontSizes.s20),
-      //titleLarge: getBoldStyle(color: ColorManager.textColor, fontSize: FontSize.s25),
-      subtitle1: getSemiBoldStyle(
-          color: ColorManager.textColor, fontSize: FontSizes.s24),
-      subtitle2: getRegularStyle(
-          color: ColorManager.textColor, fontSize: FontSizes.s12),
-      bodyText1: getRegularStyle(
-          color: ColorManager.textColor, fontSize: FontSizes.s20),
-      
-    ),
     
     // input decoration theme (text form field)
     inputDecorationTheme: InputDecorationTheme(

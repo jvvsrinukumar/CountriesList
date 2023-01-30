@@ -1,7 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:countrylist/entites/countries_list_entity.dart';
 import 'package:countrylist/repositories/list_repository.dart';
@@ -27,36 +25,29 @@ class CountriesCubit extends Cubit<CountriesState> {
   late CountriesList favCountry;
 
   CountriesCubit(this.repository) : super(CountriesInitial());
+
   Future<void> fetchCountries() async {
     emit(CountriesLoading());
-    var response = await repository.getList();
-    if (response != null) {
-      data = List<CountriesList>.from(
-          json.decode(response).map((x) => CountriesList.fromJson(x)));
-      //print(data);
+    //final response = await repository.getList(); 
+    List<CountriesList>? list = await repository.getList();
+    if (list != null) {
+      data = list;
       _countriesLst.sink.add(data);
-      
-      if (UserDefaults.getString(Constants.kFavoriteCountry).isNotEmpty) {
-        getFavorite();
-      } else {
-         emit(CountriesLoaded());
-      }
+       emit(CountriesLoaded());    
     } else {
       emit(CountriesFetchFailure());
     }
   }
 
-  Future<void> searchCountries(String name) async {
+  Future<void> searchCountries(String name, List<CountriesList> lst) async {
     emit(CountriesLoading());
     if (name.isNotEmpty) {
-      print(name);
       _countriesLst.sink.add([]);
-      List<CountriesList> ing = data
+      List<CountriesList> countries = lst
           .where((e) => e.name.toLowerCase() == name.toLowerCase())
           .toList();
-      print(ing.toString());
-      if (ing.isNotEmpty) {
-        _countriesLst.sink.add(ing);
+      if (countries.isNotEmpty) {
+        _countriesLst.sink.add(countries);
         emit(CountriesLoaded());
       } else {
         emit(CountriesSearchState(name));
@@ -69,12 +60,10 @@ class CountriesCubit extends Cubit<CountriesState> {
  getFavorite()  {
     emit(CountriesInitial());
     if (UserDefaults.getString(Constants.kFavoriteCountry).isNotEmpty) {
-      print(UserDefaults.getString(Constants.kFavoriteCountry));
       _countriesLst.sink.add([]);
       List<CountriesList> ing = data
           .where((e) => e.name.toLowerCase() == UserDefaults.getString(Constants.kFavoriteCountry).toLowerCase())
           .toList();
-      print(ing.toString());
       if (ing.isNotEmpty) {
        favCountry = ing[0];
         _countriesLst.sink.add([favCountry]);
